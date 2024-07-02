@@ -1,6 +1,6 @@
 import './InputForm.css'
 import { Button, TextInput, Label, Dropdown } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdLocalGroceryStore } from "react-icons/md";
 import Ingredient from '../Ingredient/Ingredient';
 
@@ -26,34 +26,29 @@ function InputForm() {
         setIngredientsList(newList)
     }
 
-    useEffect(()=>{
-        console.log(ingredientsList)
-    },[ingredientsList]);
-
     const handleTextChange = async (event) => {
         setIngredient(event.target.value);
     }
 
     const handleCusineChange = async (event) => {
-        console.log(event)
-        setCuisine(event.target.value);
+        setCuisine(event);
     }
 
-    const listItems = cuisines.map(item =>
-        <Dropdown.Item key={item} value={item}>{item}</Dropdown.Item>
+    const listItems = cuisines.map((item, index) =>
+        <Dropdown.Item key={index} onClick={() => handleCusineChange(item)}>{item}</Dropdown.Item>
     );
 
     return (
         <div>
             <form className="flex max-w-md flex-col gap-4" onSubmit={addIngredient}>
                 <div className='cuisine-dropdown'>
-                    <Dropdown label="Select Cuisine" color="dark" value={cuisine} onChange={handleCusineChange}>
-                        <Dropdown.Header onChange={handleCusineChange}>
+                    <Dropdown label={cuisine || "Select Cuisine"} color="dark" value={cuisine}>
+                        <Dropdown.Header>
                             <span className="block text-sm">Cuisines List</span>
                         </Dropdown.Header>
                         {listItems}
                         <Dropdown.Divider />
-                        <Dropdown.Item>Clear Selection</Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleCusineChange('')}>Clear Selection</Dropdown.Item>
                     </Dropdown>
                 </div>
                 <div>

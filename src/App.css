@@ -12,13 +12,5 @@
 }
 
 .recipe-cols {
-  min-height: 90vh !important;
-}
-
-.cuisine-dropdown {
-  margin-bottom: 20px;
-}
-
-.ingredient-input input{
-  text-align: center;
+  min-height: 91vh !important;
 }
