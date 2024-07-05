@@ -6,3 +6,11 @@
 .ingredient-input input{
     text-align: center;
 }
+
+.ingredientsList {
+    margin-top: 20px;
+}
+
+.ingredient-cols {
+    padding: 5px 15px 5px 0px;
+}

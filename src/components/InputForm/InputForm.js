@@ -21,9 +21,9 @@ function InputForm() {
 
     const addIngredient = async (event) => {
         event.preventDefault();
-        console.log("Added ingredient");
         const newList = [...ingredientsList, ingredient];
-        setIngredientsList(newList)
+        setIngredientsList(newList);
+        setIngredient('');
     }
 
     const handleTextChange = async (event) => {
@@ -34,8 +34,27 @@ function InputForm() {
         setCuisine(event);
     }
 
+    const deleteIngredient = async (id) => {
+        ingredientsList.splice(id,1);
+    }
+
+    const getRecipe = async (event) => {
+        console.log("Get the recipes list for the following keywords");
+        const list = {
+            "cuisiine": cuisine,
+            "ingredients": ingredientsList.join(',')
+        }
+        console.log(list)
+    }
+
     const listItems = cuisines.map((item, index) =>
         <Dropdown.Item key={index} onClick={() => handleCusineChange(item)}>{item}</Dropdown.Item>
+    );
+
+    const ingredientItems = ingredientsList.map((item,index) => 
+        <div className="col-span-4 p-4 ingredient-cols" key={index}>
+            <Ingredient name={item} id={index} deleteIngredientTrigger={deleteIngredient}/>
+        </div>
     );
 
     return (
@@ -58,9 +77,22 @@ function InputForm() {
                     <TextInput id="ingredientInput" className="ingredient-input" type="text" placeholder="Enter ingredient" 
                     required value={ingredient} onChange={handleTextChange} icon={MdLocalGroceryStore}/>
                 </div>
-                <Button gradientMonochrome="success" type="submit" className="p-1 w-1/4" >Add</Button>
+                <div className='grid grid-cols-12'>
+                    <div className='col-span-6 p-4 button-column'>
+                        <Button gradientMonochrome="success" type="submit" 
+                        className="p-1 w-full" >Add Ingredient</Button>
+                    </div>
+                    <div className='col-span-6 p-4 button-column'>
+                        <Button gradientMonochrome="success" type="button" onClick={getRecipe} 
+                        className="p-1 w-full get-recipe-button" >Get Recipes</Button>
+                    </div>
+                </div>
             </form>
-            <Ingredient></Ingredient>
+            <div className='ingredientsList'>
+                <div className="grid grid-cols-12">
+                    {ingredientItems}
+                </div>   
+            </div>  
         </div>
     );
 }
