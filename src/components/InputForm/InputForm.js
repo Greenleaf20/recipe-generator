@@ -18,7 +18,8 @@ function InputForm() {
     const [ingredient, setIngredient] = useState('');
     const [cuisine, setCuisine] = useState('');
     const [ingredientsList, setIngredientsList] = useState([]);
-    const recipeURL = 'https://api.spoonacular.com/recipes/complexSearch';
+    const recipeListURL = 'https://api.spoonacular.com/recipes/complexSearch';
+    const recipeURL = 'https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429';
 
     const addIngredient = async (event) => {
         event.preventDefault();
@@ -41,22 +42,30 @@ function InputForm() {
     }
 
     const getRecipe = async (event) => {
-        console.log("Get the recipes list for the following keywords");
-        const list = {
-            "cuisine": cuisine,
-            "ingredients": ingredientsList.join(',')
-        }
-        console.log(list)
-        axios.get(recipeURL+"?includeIngredients="+ingredientsList.join(',')+"&cuisine="+cuisine,{headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': '9cf0dcafb2e44cfcb30ddbd94e611ea3'
-        }})
-        .then(response => {
-            console.log(response);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+        // const newRecipeListUrl = recipeListURL+"?includeIngredients="+ingredientsList.join(',')+"&cuisine="+cuisine;
+        // axios.get(newRecipeListUrl , { headers: {
+        //     'Content-Type': 'application/json',
+        //     'x-api-key': '9cf0dcafb2e44cfcb30ddbd94e611ea3'
+        // }})
+        // .then(response => {
+        //     console.log(response);
+        //     const recipeIds = response.data.results.map(recipe => recipe.id).join(',');
+        //     console.log(recipeIds)
+        //     const newRecipeUrl = recipeURL + recipeIds
+        //     axios.get(newRecipeUrl, { headers: {
+        //         'Content-Type': 'application/json',
+        //         'x-api-key': '9cf0dcafb2e44cfcb30ddbd94e611ea3'
+        //     }})
+        //     .then(response2 => {
+        //         console.log(response2)
+        //     })
+        //     .catch(error2 => {
+        //         console.log(error2);
+        //     });
+        // })
+        // .catch(error => {
+        //     console.error(error);
+        // });
     }
 
     const listItems = cuisines.map((item, index) =>

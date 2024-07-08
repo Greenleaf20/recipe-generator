@@ -1,0 +1,27 @@
+.recipe-card img {
+    height: 350px;
+    max-height: 50%;
+}
+
+.allergy-logos {
+    display: inline-block !important;
+    height: 50px !important;
+    width: 50px !important;
+}
+
+.allergy-container {
+    display: flex;
+    gap: 10px; 
+}
+
+.instructions::first-letter {
+    text-transform: capitalize;
+}
+
+.instructions {
+    text-align: justify;
+}
+
+.key {
+    font-weight: bold;
+}
