@@ -3,7 +3,7 @@ import { Button, TextInput, Label, Dropdown } from "flowbite-react";
 import { useState } from "react";
 import { MdLocalGroceryStore } from "react-icons/md";
 import Ingredient from '../Ingredient/Ingredient';
-
+import axios from 'axios';
 
 function InputForm() {
     const cuisines = [
@@ -18,6 +18,7 @@ function InputForm() {
     const [ingredient, setIngredient] = useState('');
     const [cuisine, setCuisine] = useState('');
     const [ingredientsList, setIngredientsList] = useState([]);
+    const recipeURL = 'https://api.spoonacular.com/recipes/complexSearch';
 
     const addIngredient = async (event) => {
         event.preventDefault();
@@ -35,27 +36,39 @@ function InputForm() {
     }
 
     const deleteIngredient = async (id) => {
-        ingredientsList.splice(id,1);
+        setIngredientsList((prevList) => prevList.filter((_, index) => index !== id));
+        console.log(ingredientsList)
     }
 
     const getRecipe = async (event) => {
         console.log("Get the recipes list for the following keywords");
         const list = {
-            "cuisiine": cuisine,
+            "cuisine": cuisine,
             "ingredients": ingredientsList.join(',')
         }
         console.log(list)
+        axios.get(recipeURL+"?includeIngredients="+ingredientsList.join(',')+"&cuisine="+cuisine,{headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': '9cf0dcafb2e44cfcb30ddbd94e611ea3'
+        }})
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error);
+        });
     }
 
     const listItems = cuisines.map((item, index) =>
         <Dropdown.Item key={index} onClick={() => handleCusineChange(item)}>{item}</Dropdown.Item>
     );
 
-    const ingredientItems = ingredientsList.map((item,index) => 
-        <div className="col-span-4 p-4 ingredient-cols" key={index}>
-            <Ingredient name={item} id={index} deleteIngredientTrigger={deleteIngredient}/>
-        </div>
-    );
+    // const makeIngredientItems = async ()
+    // const ingredientItems = ingredientsList.map((item,index) => 
+    //     <div className="col-span-4 p-4 ingredient-cols" key={index}>
+    //         <Ingredient name={item} id={index} deleteIngredientTrigger={deleteIngredient}/>
+    //     </div>
+    // );
 
     return (
         <div>
@@ -90,7 +103,11 @@ function InputForm() {
             </form>
             <div className='ingredientsList'>
                 <div className="grid grid-cols-12">
-                    {ingredientItems}
+                    {ingredientsList.map((item,index) => 
+                        <div className="col-span-4 p-4 ingredient-cols" key={index}>
+                            <Ingredient name={item} id={index} deleteIngredientTrigger={deleteIngredient}/>
+                        </div>
+                    )}
                 </div>   
             </div>  
         </div>
