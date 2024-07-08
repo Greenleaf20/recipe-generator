@@ -56,8 +56,8 @@ function RecipeCard({data}) {
                     <span className='key'>Good For: </span> {goodFor.map(item => capitalizeFirstLetter(item)).join(', ')} <br/>
                 </div>
                 <span className='key'>Instructions:</span>
-                <p className="font-normal text-gray-700 dark:text-gray-400 instructions">
-                   {instructions}
+                <p className="font-normal text-gray-700 dark:text-gray-400 instructions" 
+                dangerouslySetInnerHTML={{ __html: instructions }}>
                 </p>
             </Card>
         </div>

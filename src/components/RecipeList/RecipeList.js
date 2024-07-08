@@ -12,8 +12,8 @@ function RecipeList({data}) {
 
     return (
         <div className="grid grid-cols-12">
-            {recipeList.map((item,index) => 
-                <div className="col-span-6 p-2">
+            {recipeList && recipeList.map((item,index) => 
+                <div className="col-span-6 p-2" key={index}>
                     <RecipeCard data={item}/>
                 </div>
             )}

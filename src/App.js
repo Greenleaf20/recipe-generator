@@ -5,7 +5,6 @@ import RecipeList from './components/RecipeList/RecipeList';
 
 function App() {
   const getRecipeList = async (list) => {
-    console.log(list);
     setRecipeList(list)
   }
 

@@ -1,6 +1,6 @@
 import './InputForm.css'
 import { Button, TextInput, Label, Dropdown } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdLocalGroceryStore } from "react-icons/md";
 import Ingredient from '../Ingredient/Ingredient';
 import axios from 'axios';
@@ -18,32 +18,7 @@ function InputForm({sendRecipeList}) {
     const [ingredient, setIngredient] = useState('');
     const [cuisine, setCuisine] = useState('');
     const [ingredientsList, setIngredientsList] = useState([]);
-    const [recipeList, setRecipeList] = useState([
-        {
-            image: 'https://img.spoonacular.com/recipes/715538-556x370.jpg',
-            glutenFree: true,
-            dairyFree: true,
-            vegetarian: false,
-            vegan: false,
-            title: 'What to make for dinner tonight?? Bruschetta Style Pork & Pasta',
-            instructions: 'wash and rinse pork chops and place into the skillet.cut them into bite sized pieces and add half of the Basil Garlic simmer sauce.boil your water and start working on cooking your bow-tie pasta.when you have finished with boiling and draining your pasta, add it to the pork along with the rest of the Basil Garlic Simmering Sauce, mixing lightly.Next you will top with the Chunky Bruschetta Finishing Sauce, cover with Parmesan, and cover. Cooking on low heat 2 to 3 minutes or until heated through.',
-            dishTypes: ['lunch', 'main course', 'main dish', 'dinner'],
-            cookingMinutes: 30,
-            preparationMinutes: 5
-        },
-        {
-            image: 'https://i.ytimg.com/vi/tvTuMTZRN6Y/maxresdefault.jpg',
-            glutenFree: false,
-            dairyFree: false,
-            vegetarian: true,
-            vegan: true,
-            title: 'Yummy naan and paneer',
-            instructions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            dishTypes: ['lunch', 'main course'],
-            cookingMinutes: 10,
-            preparationMinutes: 25
-        },
-    ]);
+    const [recipeList, setRecipeList] = useState([]);
     const recipeListURL = 'https://api.spoonacular.com/recipes/complexSearch';
     const recipeURL = 'https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429';
 
@@ -64,39 +39,36 @@ function InputForm({sendRecipeList}) {
 
     const deleteIngredient = async (id) => {
         setIngredientsList((prevList) => prevList.filter((_, index) => index !== id));
-        console.log(ingredientsList)
     }
 
-    function sendRecipeListToApp() {
+    useEffect(() => {
         sendRecipeList(recipeList);
-    }
+    }, [recipeList, sendRecipeList]);
 
     const getRecipe = async (event) => {
-        // const newRecipeListUrl = recipeListURL+"?includeIngredients="+ingredientsList.join(',')+"&cuisine="+cuisine;
-        // axios.get(newRecipeListUrl , { headers: {
-        //     'Content-Type': 'application/json',
-        //     'x-api-key': '9cf0dcafb2e44cfcb30ddbd94e611ea3'
-        // }})
-        // .then(response => {
-        //     console.log(response);
-        //     const recipeIds = response.data.results.map(recipe => recipe.id).join(',');
-        //     console.log(recipeIds)
-        //     const newRecipeUrl = recipeURL + recipeIds
-        //     axios.get(newRecipeUrl, { headers: {
-        //         'Content-Type': 'application/json',
-        //         'x-api-key': '9cf0dcafb2e44cfcb30ddbd94e611ea3'
-        //     }})
-        //     .then(response2 => {
-        //         console.log(response2)
-        //     })
-        //     .catch(error2 => {
-        //         console.log(error2);
-        //     });
-        // })
-        // .catch(error => {
-        //     console.error(error);
-        // });
-        sendRecipeListToApp();
+        const newRecipeListUrl = recipeListURL+"?includeIngredients="+ingredientsList.join(',')+"&cuisine="+cuisine;
+        axios.get(newRecipeListUrl , { headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': '9cf0dcafb2e44cfcb30ddbd94e611ea3'
+        }})
+        .then(response => {
+            const recipeIds = response.data.results.map(recipe => recipe.id).join(',');
+            const newRecipeUrl = recipeURL + recipeIds
+            axios.get(newRecipeUrl, { headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': '9cf0dcafb2e44cfcb30ddbd94e611ea3'
+            }})
+            .then(response2 => {
+                setRecipeList(response2.data)
+                // sendRecipeListToApp();
+            })
+            .catch(error2 => {
+                console.log(error2);
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });     
     }
 
     const listItems = cuisines.map((item, index) =>

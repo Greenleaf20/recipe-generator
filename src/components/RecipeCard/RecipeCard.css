@@ -15,11 +15,12 @@
 }
 
 .instructions::first-letter {
-    text-transform: capitalize;
+    text-transform: capitalize !important;
 }
 
 .instructions {
     text-align: justify;
+    text-transform: lowercase;
 }
 
 .key {
