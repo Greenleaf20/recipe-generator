@@ -50,10 +50,34 @@ function RecipeCard({data}) {
                     {isDairyfree && <img src='/images/dairy-free.jpg' alt='dairy-free' className='allergy-logos'/>}
                 </div>
                 <div className='recipe-nums'>
-                    <span className='key'>Serving: </span> {serving} <br/>
-                    <span className='key'>Preparation Time: </span> {prepTime} Minutes<br/>
-                    <span className='key'>Cooking Time: </span> {cookingTime} Minutes<br/>
-                    <span className='key'>Good For: </span> {goodFor.map(item => capitalizeFirstLetter(item)).join(', ')} <br/>
+                    {serving && (
+                        <>
+                            <span className='key'>Serving: </span>
+                            {serving}
+                            <br />
+                        </>
+                    )}
+                    {prepTime && ( 
+                        <>
+                            <span className='key'>Preparation Time: </span>
+                            {prepTime} Minutes
+                            <br />
+                        </>
+                    )}
+                    {cookingTime && ( 
+                        <>
+                            <span className='key'>Cooking Time: </span>
+                            {cookingTime } Minutes
+                            <br />
+                        </>
+                    )}
+                    {goodFor && goodFor.length > 0 && (
+                        <>
+                            <span className='key'>Good For: </span>
+                            {goodFor.map(item => capitalizeFirstLetter(item)).join(', ')}
+                            <br />
+                        </>
+                    )}
                 </div>
                 <span className='key'>Instructions:</span>
                 <p className="font-normal text-gray-700 dark:text-gray-400 instructions" 
