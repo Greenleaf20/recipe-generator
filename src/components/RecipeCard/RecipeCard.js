@@ -14,6 +14,7 @@ function RecipeCard({data}) {
     const [instructions, setInstructions] = useState('');
     const [goodFor, setGoodFor] = useState([]); 
     const [imgUrl, setImgUrl] = useState('');
+    const [title, setTitle] = useState('');
 
     useEffect(() => {
         if (data) {
@@ -21,12 +22,13 @@ function RecipeCard({data}) {
             setIsGlutenFree(data.glutenFree);
             setIsVegetarian(data.vegetarian);
             setIsVegan(data.vegan);
-            setDairyFree(data.dairyfree);
+            setDairyFree(data.dairyFree);
             setInstructions(data.instructions)
             setGoodFor(data.dishTypes)
             setServing(data.serving);
             setCookingTime(data.cookingMinutes);
             setPrepTime(data.preparationMinutes);
+            setTitle(data.title)
         }
     }, [data]);
 
@@ -39,7 +41,7 @@ function RecipeCard({data}) {
             <Card className="max-w-sm recipe-card" imgAlt="Paneer recipe" 
             imgSrc={imgUrl}>
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Recipe Heading here
+                    {title}
                 </h5>
                 <div className='allergy-container'>
                     {isVegetarian && <img src='/images/vegetarian.jpg' alt='vegetarian' className='allergy-logos'/>}
