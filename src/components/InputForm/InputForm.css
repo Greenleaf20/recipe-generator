@@ -1,0 +1,24 @@
+.cuisine-dropdown {
+    margin: 20px 0px 20px 0px;
+}
+
+.ingredient-container {
+    padding: 16px;
+    background-color:#eefbfb;
+}
+
+.ingredient-input input{
+    text-align: center;
+}
+
+.ingredientsList {
+    margin-top: 20px;
+}
+
+.ingredient-cols {
+    padding: 5px 15px 5px 0px;
+}
+
+.button-column {
+    padding: 16px 16px 0px 16px
+}

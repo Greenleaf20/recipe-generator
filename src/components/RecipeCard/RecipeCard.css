@@ -1,0 +1,36 @@
+.recipe-card img {
+    height: 350px;
+    max-height: 50%;
+}
+
+.recipe-card:hover {
+    background-color: #eefbfb;
+}
+
+.allergy-logos {
+    display: inline-block !important;
+    height: 50px !important;
+    width: 50px !important;
+}
+
+.allergy-container {
+    display: flex;
+    gap: 10px; 
+}
+
+.instructions::first-letter {
+    text-transform: capitalize !important;
+}
+
+.instructions {
+    text-align: justify;
+    text-transform: lowercase;
+}
+
+.key {
+    font-weight: bold;
+}
+
+.recipe-container {
+    padding: 20px;
+}
