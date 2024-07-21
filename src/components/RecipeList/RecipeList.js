@@ -13,7 +13,7 @@ function RecipeList({data}) {
     return (
         <div className="grid grid-cols-12 recipe-list-container">
             {recipeList && recipeList.map((item,index) => 
-                <div className="col-span-6 p-2" key={index}>
+                <div className="col-span-6 p-6" key={index}>
                     <RecipeCard data={item}/>
                 </div>
             )}
