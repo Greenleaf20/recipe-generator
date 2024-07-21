@@ -21,6 +21,7 @@ function InputForm({sendRecipeList}) {
     const [recipeList, setRecipeList] = useState([]);
     const recipeListURL = 'https://api.spoonacular.com/recipes/complexSearch';
     const recipeURL = 'https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429';
+    const apiKey = '';
 
     const addIngredient = async (event) => {
         event.preventDefault();
@@ -49,14 +50,14 @@ function InputForm({sendRecipeList}) {
         const newRecipeListUrl = recipeListURL+"?includeIngredients="+ingredientsList.join(',')+"&cuisine="+cuisine;
         axios.get(newRecipeListUrl , { headers: {
             'Content-Type': 'application/json',
-            'x-api-key': '9cf0dcafb2e44cfcb30ddbd94e611ea3'
+            'x-api-key': apiKey
         }})
         .then(response => {
             const recipeIds = response.data.results.map(recipe => recipe.id).join(',');
             const newRecipeUrl = recipeURL + recipeIds
             axios.get(newRecipeUrl, { headers: {
                 'Content-Type': 'application/json',
-                'x-api-key': '9cf0dcafb2e44cfcb30ddbd94e611ea3'
+                'x-api-key': apiKey
             }})
             .then(response2 => {
                 setRecipeList(response2.data)
