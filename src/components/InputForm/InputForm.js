@@ -45,6 +45,10 @@ function InputForm({sendRecipeList}) {
         setIngredientsList(newList);
     }
 
+    const removeAllIngredients = () => {
+        setIngredientsList([]);
+    }
+
     useEffect(() => {
         sendRecipeList(recipeList);
     }, [recipeList, sendRecipeList]);
@@ -80,8 +84,8 @@ function InputForm({sendRecipeList}) {
     );
 
     return (
-        <div>
-            <form className="flex max-w-md flex-col gap-4" onSubmit={addIngredient}>
+        <div className='ingredient-container'>
+            <form className="flex max-w-md flex-col gap-4 input-form" onSubmit={addIngredient}>
                 <div className='cuisine-dropdown'>
                     <Dropdown label={cuisine || "Select Cuisine"} color="dark" value={cuisine}>
                         <Dropdown.Header>
@@ -107,6 +111,16 @@ function InputForm({sendRecipeList}) {
                     <div className='col-span-6 p-4 button-column'>
                         <Button gradientMonochrome="success" type="button" onClick={getRecipe} 
                         className="p-1 w-full get-recipe-button" >Get Recipes</Button>
+                    </div>
+                </div>
+                <div className='grid grid-cols-12'>
+                    <div className='col-span-2 p-4 button-column'>
+                    </div>
+                    <div className='col-span-8 p-4 button-column'>
+                        <Button gradientMonochrome="success" type="button" 
+                        className="p-1 w-full" onClick={removeAllIngredients}>Remove all ingredients</Button>
+                    </div>
+                    <div className='col-span-2 p-4 button-column'>
                     </div>
                 </div>
             </form>

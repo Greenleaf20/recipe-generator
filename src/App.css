@@ -1,6 +1,4 @@
 .App {
-  border: 1px solid whitesmoke;
-  border-radius: 50px;
   margin: 1px;
 }
 
@@ -13,5 +11,6 @@
 }
 
 .recipe-cols {
-  min-height: 91vh !important;
+  min-height: 99vh !important;
+  padding: 0px;
 }
