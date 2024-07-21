@@ -19,5 +19,9 @@
 }
 
 .button-column {
-    padding: 16px 16px 0px 16px
+    padding: 5px 16px 0px 16px
+}
+
+.input-alert-container {
+    margin: 20px;
 }
