@@ -1,9 +1,10 @@
 import './InputForm.css'
-import { Button, TextInput, Label, Dropdown } from "flowbite-react";
+import { Button, TextInput, Label, Dropdown, Alert } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { MdLocalGroceryStore } from "react-icons/md";
 import Ingredient from '../Ingredient/Ingredient';
 import axios from 'axios';
+import { HiInformationCircle } from 'react-icons/hi2';
 
 function InputForm({sendRecipeList}) {
     const cuisines = [
@@ -21,6 +22,7 @@ function InputForm({sendRecipeList}) {
     const [recipeList, setRecipeList] = useState([]);
     const recipeListURL = 'https://api.spoonacular.com/recipes/complexSearch';
     const recipeURL = 'https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429';
+    const [emptyAlert, setEmptyAlert] = useState(false);
     
     const apiKey = '9cf0dcafb2e44cfcb30ddbd94e611ea3';
 
@@ -48,11 +50,25 @@ function InputForm({sendRecipeList}) {
         setIngredientsList([]);
     }
 
+    const clearResults = () => {
+        setRecipeList([]);
+        setCuisine('');
+        removeAllIngredients();
+    }
+
     useEffect(() => {
         sendRecipeList(recipeList);
     }, [recipeList, sendRecipeList]);
 
     const getRecipe = async (event) => {
+        if (ingredientsList.length===0 && cuisine==='') {
+            setEmptyAlert(true);
+            setTimeout(() => {
+                setEmptyAlert(false);
+            },5000);
+            return;
+        }
+
         const newRecipeListUrl = recipeListURL+"?includeIngredients="+ingredientsList.join(',')+"&cuisine="+cuisine;
         axios.get(newRecipeListUrl , { headers: {
             'Content-Type': 'application/json',
@@ -105,11 +121,11 @@ function InputForm({sendRecipeList}) {
                 <div className='grid grid-cols-12'>
                     <div className='col-span-6 p-4 button-column'>
                         <Button gradientMonochrome="success" type="submit" 
-                        className="p-1 w-full" >Add Ingredient</Button>
+                        className="p-1 w-full" >Add ingredient</Button>
                     </div>
                     <div className='col-span-6 p-4 button-column'>
                         <Button gradientMonochrome="success" type="button" onClick={getRecipe} 
-                        className="p-1 w-full get-recipe-button" >Get Recipes</Button>
+                        className="p-1 w-full get-recipe-button" >Get recipes</Button>
                     </div>
                 </div>
                 <div className='grid grid-cols-12'>
@@ -122,7 +138,24 @@ function InputForm({sendRecipeList}) {
                     <div className='col-span-2 p-4 button-column'>
                     </div>
                 </div>
+                <div className='grid grid-cols-12'>
+                    <div className='col-span-2 p-4 button-column'>
+                    </div>
+                    <div className='col-span-8 p-4 button-column'>
+                        <Button gradientMonochrome="success" type="button" 
+                        className="p-1 w-full" onClick={clearResults}>Clear results</Button>
+                    </div>
+                    <div className='col-span-2 p-4 button-column'>
+                    </div>
+                </div>
             </form>
+            <div className='input-alert-container'>
+                {
+                    emptyAlert && <Alert color="failure" icon={HiInformationCircle}>
+                        <span className="font-medium input-alert">Empty input!</span> Enter either ingredients or cuisine before submitting the form.
+                    </Alert>
+                }
+            </div>
             <div className='ingredientsList'>
                 <div className="grid grid-cols-12">
                     {ingredientsList.map((item,index) => 
