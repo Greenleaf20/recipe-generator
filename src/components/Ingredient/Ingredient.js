@@ -15,9 +15,7 @@ function Ingredient({name, id, deleteIngredientTrigger}) {
                             {name}
                         </p>
                     </div>
-                    <Banner.CollapseButton color="gray" className="border-0 bg-transparent text-gray-500 dark:text-gray-400">
-                        <HiX className="h-4 w-4" onClick={removeIngredient}/>
-                    </Banner.CollapseButton>
+                    <HiX className="h-5 w-4 ingredient-close" onClick={removeIngredient}/>
                 </div>
             </Banner>
         </div>

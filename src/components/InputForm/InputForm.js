@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { MdLocalGroceryStore } from "react-icons/md";
 import Ingredient from '../Ingredient/Ingredient';
 import axios from 'axios';
+import { flushSync } from 'react-dom';
 
 function InputForm({sendRecipeList}) {
     const cuisines = [
@@ -21,7 +22,8 @@ function InputForm({sendRecipeList}) {
     const [recipeList, setRecipeList] = useState([]);
     const recipeListURL = 'https://api.spoonacular.com/recipes/complexSearch';
     const recipeURL = 'https://api.spoonacular.com/recipes/informationBulk?ids=715538,716429';
-    const apiKey = '';
+    
+    const apiKey = '9cf0dcafb2e44cfcb30ddbd94e611ea3';
 
     const addIngredient = async (event) => {
         event.preventDefault();
@@ -38,8 +40,9 @@ function InputForm({sendRecipeList}) {
         setCuisine(event);
     }
 
-    const deleteIngredient = async (id) => {
-        setIngredientsList((prevList) => prevList.filter((_, index) => index !== id));
+    const deleteIngredient = (id) => {
+        const newList = ingredientsList.filter((_, index) => index !== id);
+        setIngredientsList(newList);
     }
 
     useEffect(() => {
@@ -75,13 +78,6 @@ function InputForm({sendRecipeList}) {
     const listItems = cuisines.map((item, index) =>
         <Dropdown.Item key={index} onClick={() => handleCusineChange(item)}>{item}</Dropdown.Item>
     );
-
-    // const makeIngredientItems = async ()
-    // const ingredientItems = ingredientsList.map((item,index) => 
-    //     <div className="col-span-4 p-4 ingredient-cols" key={index}>
-    //         <Ingredient name={item} id={index} deleteIngredientTrigger={deleteIngredient}/>
-    //     </div>
-    // );
 
     return (
         <div>
