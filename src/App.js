@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
       <div className="grid grid-cols-12">
-        <div className="col-span-4 bg-slate-100  p-4 recipe-cols">
+        <div className="col-span-4 bg-slate-100  p-4 recipe-cols recipe-input-col">
           <div className='Heading' style={{ backgroundImage: `url(${bg2})`, backgroundSize: 'cover', backgroundPosition: 'center', minHeight: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
             <h1 className='heading' style={{ zIndex: 1 }}>RECIPE GENERATOR</h1>
           </div>
