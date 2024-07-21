@@ -3,6 +3,10 @@
     max-height: 50%;
 }
 
+.recipe-card:hover {
+    background-color: ghostwhite;
+}
+
 .allergy-logos {
     display: inline-block !important;
     height: 50px !important;
@@ -25,4 +29,8 @@
 
 .key {
     font-weight: bold;
+}
+
+.recipe-container {
+    padding: 20px;
 }

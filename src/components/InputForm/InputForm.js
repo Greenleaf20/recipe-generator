@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { MdLocalGroceryStore } from "react-icons/md";
 import Ingredient from '../Ingredient/Ingredient';
 import axios from 'axios';
-import { flushSync } from 'react-dom';
 
 function InputForm({sendRecipeList}) {
     const cuisines = [
